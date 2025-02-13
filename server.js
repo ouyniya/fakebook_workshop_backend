@@ -4,6 +4,8 @@ const notFound = require("./middlewares/notFound")
 const errorMiddleware = require("./middlewares/errorMiddleware")
 const authRoute = require("./routes/auth-route")
 const postRouter = require("./routes/post-route")
+const commentRouter = require("./routes/comment-route")
+const likeRouter = require("./routes/like-route")
 const app = express()
 
 // middlewares
@@ -12,8 +14,8 @@ const app = express()
 // routing
 app.use("/auth", authRoute)
 app.use("/post", postRouter)
-app.use("/comment", (req, res) => { res.send("comment") })
-app.use("/like",  (req, res) => { res.send("like") })
+app.use("/comment", commentRouter)
+app.use("/like",  likeRouter)
 
 // not found middlewares
 app.use(notFound)
