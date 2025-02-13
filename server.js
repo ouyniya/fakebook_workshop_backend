@@ -9,7 +9,7 @@ const likeRouter = require("./routes/like-route")
 const app = express()
 
 // middlewares
-
+app.use(express.json())
 
 // routing
 app.use("/auth", authRoute)
