@@ -1,7 +1,8 @@
 🚀 FAKEBOOK Workshop 
 ===
 
-### env guide 🧭
+### Env guide 🧭
+`environment variables`:  
 PORT=  
 DATABASE_URL=  
 JWT_SECRET=  
@@ -24,38 +25,3 @@ CLOUDINARY_SECRET=
 | /like               | POST    | y            | -     | -     | {postId}
 | /like               | DELETE  | y            | :id   | -     | -
 
-
-
-
-
-## Step 1 
-### 1.1. create file `server.js` 
-
-### 1.2 start project
-```bash
-npm init -y
-```
-
-### 1.3 update `package.json`
-```js
-"scripts": {
-    "dev": "nodemon server.js",
-    "start": "nodemon server.js"
-  },
-```
-
-### 1.4 create `.gitignore` file
-```js
-node_modules/
-.env
-```
-
-### 1.5 installation
-```bash
-npm i 
-```
-
-### 1.6 git init
-```bash
-git init 
-```
