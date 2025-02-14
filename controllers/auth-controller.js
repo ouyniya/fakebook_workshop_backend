@@ -90,10 +90,12 @@ module.exports.login = tryCatch(
     
         const { identity, password } = req.body
 
+        // check whether input is null
         if (!identity.trim() || !password.trim()) {
             createError(400, "please fill all data")
         }
 
+        // check email or mobile
         const identifyKey = checkEmailOrMobile(identity)
 
         const foundUser = await prisma.user.findUnique({
@@ -115,50 +117,26 @@ module.exports.login = tryCatch(
         const payload = { id: foundUser.id }
         const token = jwt.sign(payload, process.env.JWT_SECRET, {expiresIn: '15d'})
 
-        res.json({ msg: "login successful", token, user: foundUser })
-        
-        }
+        // delete unused data (***not send password to frontend)
+        // ver 1 : delete unused data
+        // delete foundUser.password
+        // delete foundUser.createdAt
+        // delete foundUser.updatedAt
+
+        // ver 2 : using rest parameter
+        const { password: pw, createdAt, updatedAt, ...userData } = foundUser
+
+        // send to frontend
+        res.json({ msg: "login successful", token, user: userData })
+
+    }
 )
-
-// module.exports.login = async (req, res, next) => {
-//     try {
-//         const { identity, password } = req.body
-
-//         if (!identity.trim() || !password.trim()) {
-//             createError(400, "please fill all data")
-//         }
-
-//         const identifyKey = checkEmailOrMobile(identity)
-
-//         const foundUser = await prisma.user.findUnique({
-//             where: {
-//                 [identifyKey]: identity,
-//             }
-//         })
-
-//         if (!foundUser) {
-//             createError(401, "Invalid login")
-//         }
-
-//         let pwOk = await bcrypt.compare(password, foundUser.password)
-//         if (!pwOk) {
-//             createError(401, "Invalid login")
-//         }
-
-//         // create token 
-//         const payload = { id: foundUser.id }
-//         const token = jwt.sign(payload, process.env.JWT_SECRET, {expiresIn: '15d'})
-
-//         res.json({ msg: "login successful", token, user: foundUser })
-
-//     } catch (error) {
-//         next(error)
-//     }
-// }
 
 module.exports.getMe = (req, res, next) => {
     try {
-        res.json({ msg: "get me" })
+        console.log(req.user)
+        // const { userData } = req.user
+        res.json({ user: req.user })
     } catch (error) {
         next(error)
     }
