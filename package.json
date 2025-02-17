@@ -4,7 +4,11 @@
   "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js",
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "resetDB": "node prisma/resetDB.js"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
   },
   "keywords": [],
   "author": "",
@@ -18,6 +22,7 @@
     "jsonwebtoken": "^9.0.2"
   },
   "devDependencies": {
+    "daisyui": "^4.12.23",
     "prisma": "^6.3.1",
     "prisma-erd-generator": "^2.0.4"
   }
