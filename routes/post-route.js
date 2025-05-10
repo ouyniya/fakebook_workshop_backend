@@ -1,12 +1,16 @@
 const express = require("express")
 const postRouter = express.Router()
+const postController = require('../controllers/post-controller')
+const upload = require('../middlewares/upload')
+const authenticate = require("../middlewares/authenticate")
 
-postRouter.get("/", (req, res) => res.send("get post"))
 
-postRouter.post("/", (req, res) => res.send("post post"))
+postRouter.get("/", authenticate ,postController.getAllPosts)
 
-postRouter.put("/", (req, res) => res.send("put post"))
+postRouter.post("/",  authenticate ,upload.single('image'), postController.createPost)
 
-postRouter.delete("/", (req, res) => res.send("del post"))
+postRouter.put("/:id", authenticate ,upload.single('image') ,postController.updatePost)
+
+postRouter.delete("/:id", authenticate ,postController.deletePost)
 
 module.exports = postRouter;
